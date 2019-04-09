@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Page Load Bar</title>
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<style>
+.pace {
+  -webkit-pointer-events: none;
+  pointer-events: none;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.pace-inactive {
+  display: none;
+}
+
+.pace .pace-progress {
+  background: #15a297;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  right: 100%;
+  width: 100%;
+  height: 2px;
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+document.onreadystatechange = function(e)
+{
+  if(document.readyState=="interactive")
+  {
+    var all = document.getElementsByTagName("*");
+    for (var i=0, max=all.length; i < max; i++) 
+    {
+      set_ele(all[i]);
+    }
+  }
+}
+
+function check_element(ele)
+{
+  var all = document.getElementsByTagName("*");
+  var totalele=all.length;
+  var per_inc=100/all.length;
+  if($(ele).on())
+  {
+    var prog_width=per_inc+Number(document.getElementById("progress_width").value);
+    document.getElementById("progress_width").value=prog_width;
+    $("#bar1").animate({width:prog_width+"%"},10,function(){
+      if(document.getElementById("bar1").style.width=="100%")
+      {
+        $(".progress").fadeOut("slow");
+      }			
+    });
+  }
+  else	
+  {
+    set_ele(ele);
+  }
+}
+
+function set_ele(set_element)
+{
+  check_element(set_element);
+}
+</script>
+</head>
+
+<body>
+<h1>Page Load Bar Using Jquery</h1>
+<div class='progress' id="progress_div">
+    <div class='bar' id='bar1'></div>
+    <div class='percent' id='percent1'></div>
+</div>
+
+  <!--place this at last--><input type="hidden" id="progress_width" value="0">
+</body>
+</html>
